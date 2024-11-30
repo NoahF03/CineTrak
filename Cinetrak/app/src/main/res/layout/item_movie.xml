@@ -8,12 +8,12 @@
 
     <!-- Movie Poster Image -->
     <ImageView
-        android:id="@+id/movie_poster_image"
+        android:id="@+id/movie_poster"
         android:layout_width="150dp"
         android:layout_height="220dp"
         android:layout_gravity="center"
-        android:background="@drawable/rounded_dark_grey"
         android:src="@drawable/ic_placeholder"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:clickable="true"/>
 
 </LinearLayout>

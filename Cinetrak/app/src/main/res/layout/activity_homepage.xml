@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@drawable/login_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
@@ -19,6 +20,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="4dp" />
@@ -34,44 +36,6 @@
             android:paddingTop="5dp"
             android:paddingBottom="10dp" />
 
-        <!-- Search Bar -->
-        <EditText
-            android:id="@+id/movie_search_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search Movie"
-            android:textColor="#616161"
-            android:textColorHint="#616161"
-            android:textSize="15sp"
-            android:background="@drawable/rounded_black"
-            android:padding="10dp"
-            android:layout_marginTop="18dp" />
-
-        <!-- Popular Movies and Button -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/PopularText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Popular Movies"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_alignParentStart="true" />
-
-            <Button
-                android:id="@+id/popular_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View All"
-                android:textSize="12sp"
-                android:textColor="#616161"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-
         <!-- Row of Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,35 +45,37 @@
             android:layout_marginTop="15dp">
 
             <Button
+                android:id="@+id/PopularButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Most Viewed"
+                android:text="Popular"
                 android:textSize="14sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_dark_grey"
+                android:textColor="#003EFF"
+                android:background="@drawable/roundedwhite"
                 android:layout_marginEnd="5dp" />
 
             <Button
-                android:id="@+id/topRatedButton"
+                android:id="@+id/TopRated"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Top Rated"
                 android:textSize="14sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_dark_grey"
+                android:textColor="#003EFF"
+                android:background="@drawable/roundedwhite"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp" />
 
             <Button
+                android:id="@+id/UpcomingButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Latest"
+                android:text="Upcoming"
                 android:textSize="14sp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rounded_dark_grey"
+                android:textColor="#003EFF"
+                android:background="@drawable/roundedwhite"
                 android:layout_marginStart="5dp" />
 
 
@@ -124,4 +90,35 @@
             android:scrollbars="horizontal"
             android:padding="10dp"/>
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/logoutButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/logout"
+        android:background="@android:color/transparent"
+        android:contentDescription="Logout Button" />
+
+    <!-- Home Button (Bottom Left Corner) -->
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/homeicon"
+        android:background="@android:color/transparent"
+        android:contentDescription="Home Button" />
+
+    <!-- User List Button (Bottom Right Corner) -->
+    <ImageButton
+        android:id="@+id/userListButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/userlist"
+        android:background="@android:color/transparent"
+        android:contentDescription="User List Button" />
 </RelativeLayout>

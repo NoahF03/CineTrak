@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.github.glide)
     implementation(libs.androidx.room.ktx)
     implementation(libs.room.runtime)
+    implementation(libs.androidx.material3.android)
     ksp(libs.room.compiler) // Use KSP for Room annotation processing
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)

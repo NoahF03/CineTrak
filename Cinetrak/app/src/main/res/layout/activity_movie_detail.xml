@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:gravity="top"
+    android:scrollbars="vertical">
+
+    <!-- Movie Poster -->
+    <ImageView
+        android:id="@+id/movie_detail_poster"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:contentDescription="Movie Poster"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Movie Title -->
+    <TextView
+        android:id="@+id/movie_detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Movie Overview -->
+    <TextView
+        android:id="@+id/movie_detail_overview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:lineSpacingExtra="4dp"
+        android:textAlignment="viewStart"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:maxLines="5"
+         />
+
+    <!-- Movie Release Date -->
+    <TextView
+        android:id="@+id/movie_detail_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="italic"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Add to List Button -->
+    <Button
+        android:id="@+id/add_to_list_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Add to Your List"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#616161"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:drawableLeft="@drawable/ic_add_list"
+        android:drawablePadding="12dp"
+        android:contentDescription="Add to List Button" />
+
+</LinearLayout>
