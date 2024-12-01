@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+
+import kotlinx.coroutines.launch
 
 class MovieDetailActivity : AppCompatActivity() {
 
@@ -37,9 +41,35 @@ class MovieDetailActivity : AppCompatActivity() {
         overviewTextView.text = movieOverview
         releaseDateTextView.text = movieReleaseDate
 
-        // Button click listener (functionality can be added later)
+        // Button click listener to add movie to the database
         addToListButton.setOnClickListener {
-            // Add to your list functionality can be added here
+            if (movieTitle != null) {
+                // Insert movie into database
+                lifecycleScope.launch {
+                    val movieDatabase = MovieDatabase.getDatabase(this@MovieDetailActivity)
+                    val movieListDAO = movieDatabase.MovieListDAO()
+
+                    // Create a MovieList object
+                    val movie = MovieList(
+                        id = 0,  // Auto-generated id
+                        title = movieTitle,
+                        watched = false // Default value
+                    )
+
+                    // Insert the movie into the database
+                    movieListDAO.insertMovie(movie)
+
+                    // Show a message to the user
+                    runOnUiThread {
+                        showToast("Movie added to your list!")
+                    }
+                }
+            }
         }
+    }
+
+    // Utility function to show a toast message
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

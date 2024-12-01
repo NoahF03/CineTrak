@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Movie Title -->
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Movie Title"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_weight="1" />
+
+    <!-- Watched Status -->
+    <TextView
+        android:id="@+id/movie_watched_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not Watched"
+        android:textSize="14sp"
+        android:textColor="#808080" />
+
+    <!-- Watched Button -->
+    <ImageButton
+        android:id="@+id/watched_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/watched"
+        android:contentDescription="Watched Button"
+        android:background="@drawable/login_background"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- Delete Button -->
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/delete"
+        android:contentDescription="Delete Button"
+        android:background="@drawable/login_background"/>
+</LinearLayout>
