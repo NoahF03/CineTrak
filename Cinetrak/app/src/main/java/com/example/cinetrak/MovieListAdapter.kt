@@ -7,49 +7,56 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Adapter for displaying the list of movies in the movie list.
+ * It provides click listeners for viewing movie details, marking movies as watched, and deleting movies from the list.
+ */
 class MovieListAdapter(
-    private val movieList: List<MovieList>,
-    private val onMovieClick: (MovieList) -> Unit,
-    private val onDeleteClick: (MovieList) -> Unit,
-    private val onWatchedClick: (MovieList) -> Unit
+    private val movieList: List<MovieList>,  // List of movies to display
+    private val onMovieClick: (MovieList) -> Unit,  // Callback for movie item click
+    private val onDeleteClick: (MovieList) -> Unit,  // Callback for delete button click
+    private val onWatchedClick: (MovieList) -> Unit  // Callback for watched button click
 ) : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
 
+    // Creates a new ViewHolder for each movie item
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        // Inflate the layout for each movie item in the list
+        // Inflate the layout for each item in the RecyclerView
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie_list, parent, false)
         return MovieListViewHolder(view)
     }
 
+    // Binds data to each ViewHolder
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movie = movieList[position] // Get the current movie item
 
-        // Set up the movie title and watched status
+        // Set the movie title and its watched status (either "Watched" or "Not Watched")
         holder.titleTextView.text = movie.title
         holder.watchedTextView.text = if (movie.watched) "Watched" else "Not Watched"
 
-        // Set up the click listener for each item
+        // Set up click listener for the movie item
         holder.itemView.setOnClickListener {
-            onMovieClick(movie) // Pass the clicked movie to the callback
+            onMovieClick(movie)  // Trigger the movie click callback
         }
 
-        // Set up the delete button click listener
+        // Set up delete button click listener
         holder.deleteButton.setOnClickListener {
-            onDeleteClick(movie) // Pass the movie to the delete callback
+            onDeleteClick(movie)  // Trigger the delete click callback
         }
 
-        // Set up the watched button click listener
+        // Set up watched button click listener
         holder.watchedButton.setOnClickListener {
-            onWatchedClick(movie) // Pass the movie to the watched callback
+            onWatchedClick(movie)  // Trigger the watched click callback
         }
     }
 
+    // Returns the total number of items in the movie list
     override fun getItemCount(): Int = movieList.size
 
-    // ViewHolder class to hold the views for each item
+    // ViewHolder class to hold the views for each movie item
     class MovieListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleTextView: TextView = itemView.findViewById(R.id.movie_title)
-        val watchedTextView: TextView = itemView.findViewById(R.id.movie_watched_status)
-        val watchedButton: ImageButton = itemView.findViewById(R.id.watched_button)
-        val deleteButton: ImageButton = itemView.findViewById(R.id.delete_button)
+        val titleTextView: TextView = itemView.findViewById(R.id.movie_title)  // Movie title
+        val watchedTextView: TextView = itemView.findViewById(R.id.movie_watched_status)  // Watched status
+        val watchedButton: ImageButton = itemView.findViewById(R.id.watched_button)  // Button to mark as watched
+        val deleteButton: ImageButton = itemView.findViewById(R.id.delete_button)  // Button to delete the movie from the list
     }
 }

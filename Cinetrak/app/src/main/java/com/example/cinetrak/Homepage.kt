@@ -21,94 +21,92 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class Homepage : AppCompatActivity() {
 
-    private lateinit var movieRecyclerView: RecyclerView
-    private lateinit var movieAdapter: MovieAdapter
-    private lateinit var movieList: List<Movie> // This list should be populated with movies
+    private lateinit var movieRecyclerView: RecyclerView // RecyclerView for displaying the list of movies
+    private lateinit var movieAdapter: MovieAdapter // Adapter for the movie list
+    private lateinit var movieList: List<Movie> // List of movies to be populated from API
 
-    private val apiKey = "4a5592eeb45e3d65a9e125bdfaea2754" // Use your actual API key
+    private val apiKey = "4a5592eeb45e3d65a9e125bdfaea2754" // API key for accessing the movie API
     private var currentEndpoint: String = "popular" // Default endpoint to 'popular'
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_homepage)
 
-        // Get the first name from the Intent
+        // Retrieve the first name of the user from the Intent extras
         val firstname = intent.getStringExtra("USER_FIRST_NAME") ?: "User"
 
         val welcomeText: TextView = findViewById(R.id.textView)
-        welcomeText.text = "Welcome, $firstname!\uD83D\uDC4B "
+        welcomeText.text = "Welcome, $firstname!\uD83D\uDC4B" // Display a welcome message
 
-        // Initialize the RecyclerView
+        // Initialize the RecyclerView to display the list of movies
         movieRecyclerView = findViewById(R.id.movie_recycler_view)
-        movieRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        movieRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false) // Horizontal layout
 
-        // Initialize Retrofit with the base URL and the Gson converter.
+        // Initialize Retrofit with the base URL and the Gson converter for parsing JSON responses
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/movie/") // Base URL only
-            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://api.themoviedb.org/3/movie/") // API base URL
+            .addConverterFactory(GsonConverterFactory.create()) // Use Gson to convert JSON to Kotlin objects
             .build()
 
-        // Create the ApiService to define and call API endpoints
+        // Create the ApiService to define API endpoints
         val apiService = retrofit.create(ApiService::class.java)
 
-        // Button click listeners to change the endpoint
+        // Set up button click listeners to change the endpoint and fetch different movie lists
         findViewById<Button>(R.id.TopRated).setOnClickListener {
-            currentEndpoint = "top_rated"
-            fetchMovies(apiService)
-            resetButtonBackgrounds()
-            it.setBackgroundResource(R.drawable.rounded_dark_grey)  // Set the pressed color background
+            currentEndpoint = "top_rated" // Change the endpoint to 'top_rated'
+            fetchMovies(apiService) // Fetch movies for the selected endpoint
+            resetButtonBackgrounds() // Reset button background colors
+            it.setBackgroundResource(R.drawable.rounded_dark_grey) // Set the pressed color background
         }
 
         findViewById<Button>(R.id.PopularButton).setOnClickListener {
-            currentEndpoint = "popular"
-            fetchMovies(apiService)
-            resetButtonBackgrounds()
-            it.setBackgroundResource(R.drawable.rounded_dark_grey)  // Set the pressed color background
+            currentEndpoint = "popular" // Change the endpoint to 'popular'
+            fetchMovies(apiService) // Fetch movies for the selected endpoint
+            resetButtonBackgrounds() // Reset button background colors
+            it.setBackgroundResource(R.drawable.rounded_dark_grey) // Set the pressed color background
         }
 
         findViewById<Button>(R.id.UpcomingButton).setOnClickListener {
-            currentEndpoint = "upcoming"
-            fetchMovies(apiService)
-            resetButtonBackgrounds()
-            it.setBackgroundResource(R.drawable.rounded_dark_grey)  // Set the pressed color background
+            currentEndpoint = "upcoming" // Change the endpoint to 'upcoming'
+            fetchMovies(apiService) // Fetch movies for the selected endpoint
+            resetButtonBackgrounds() // Reset button background colors
+            it.setBackgroundResource(R.drawable.rounded_dark_grey) // Set the pressed color background
         }
 
-        // Fetch movies initially
+        // Fetch movies initially when the activity is created
         fetchMovies(apiService)
 
-        // Set up the buttons in the corners
+        // Set up the buttons in the corners for logout and navigation
         findViewById<ImageButton>(R.id.logoutButton).setOnClickListener {
-            // Handle logout action
-            logout()
+            logout() // Handle logout action
         }
 
         findViewById<ImageButton>(R.id.homeButton).setOnClickListener {
-            // Navigate to Home
-            navigateToHome()
+            navigateToHome() // Navigate to the home screen
         }
 
         findViewById<ImageButton>(R.id.userListButton).setOnClickListener {
-            // Navigate to User List
-            navigateToUserList()
+            navigateToUserList() // Navigate to the user list screen
         }
     }
 
-    // Helper function to reset other buttons' backgrounds
+    // Helper function to reset other buttons' backgrounds to the default color
     private fun resetButtonBackgrounds() {
         findViewById<Button>(R.id.TopRated).setBackgroundResource(R.drawable.roundedwhite)
         findViewById<Button>(R.id.PopularButton).setBackgroundResource(R.drawable.roundedwhite)
         findViewById<Button>(R.id.UpcomingButton).setBackgroundResource(R.drawable.roundedwhite)
     }
 
-    // Function to fetch movies based on the current endpoint
+    // Function to fetch movies from the API based on the selected endpoint
     private fun fetchMovies(apiService: ApiService) {
+        // Determine the appropriate API call based on the current endpoint
         val call: Call<MovieResponse> = when (currentEndpoint) {
-            "top_rated" -> apiService.getTopRatedMovies(1, apiKey)
-            "upcoming" -> apiService.getUpcomingMovies(1, apiKey)
-            else -> apiService.getPopularMovies(1, apiKey)
+            "top_rated" -> apiService.getTopRatedMovies(1, apiKey) // Fetch top rated movies
+            "upcoming" -> apiService.getUpcomingMovies(1, apiKey) // Fetch upcoming movies
+            else -> apiService.getPopularMovies(1, apiKey) // Fetch popular movies (default)
         }
 
-        // Make the network call asynchronously
+        // Make the network call asynchronously using Retrofit
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(
                 call: Call<MovieResponse>,
@@ -116,9 +114,9 @@ class Homepage : AppCompatActivity() {
             ) {
                 // Check if the response is successful
                 if (response.isSuccessful) {
-                    val movieResponse = response.body()
+                    val movieResponse = response.body() // Get the response body
                     movieResponse?.let {
-                        // Set up the adapter with the response data
+                        // Set up the adapter with the fetched movie list
                         movieAdapter = MovieAdapter(it.results) { movie ->
                             // Navigate to the MovieDetailActivity when a movie is clicked
                             val intent = Intent(this@Homepage, MovieDetailActivity::class.java).apply {
@@ -127,9 +125,9 @@ class Homepage : AppCompatActivity() {
                                 putExtra("MOVIE_OVERVIEW", movie.overview)
                                 putExtra("MOVIE_RELEASE_DATE", movie.release_date)
                             }
-                            startActivity(intent)
+                            startActivity(intent) // Start the movie details activity
                         }
-                        movieRecyclerView.adapter = movieAdapter
+                        movieRecyclerView.adapter = movieAdapter // Set the adapter to the RecyclerView
                     }
                 } else {
                     // Handle unsuccessful response
@@ -146,16 +144,15 @@ class Homepage : AppCompatActivity() {
 
     // Handle logout logic
     private fun logout() {
-        // You can add your logout logic here, e.g., clearing session or redirecting to a login screen.
-        // Example:
-        val intent = Intent(this, MainActivity::class.java)
+        // You can add your logout logic here, e.g., clearing session or redirecting to a login screen
+        val intent = Intent(this, MainActivity::class.java) // Navigate to the login screen
         startActivity(intent)
-        finish()
+        finish() // Close the current activity
     }
 
     // Navigate to the Home screen
     private fun navigateToHome() {
-        // You can navigate to a home screen or perform any action
+        // Navigate to the home screen (this could be used to refresh or go to the homepage)
         val intent = Intent(this, Homepage::class.java)
         startActivity(intent)
     }
